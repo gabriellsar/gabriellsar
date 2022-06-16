@@ -21,3 +21,18 @@
 <h1 align="center">
   Seja bem vindo :wave:
 </h1>
+
+<div align="center">
+  <img src='https://media.giphy.com/media/mTPjPA6SSXgTsnZ1Dh/giphy.gif' width="300" height="200"/>
+</div>
+
+
+### 👨‍💻 Sobre mim :
+
+- :telescope: Sou estudante da PUC-Rio em
+
+- :seedling: Exploring Technical Content Writing.
+
+- :zap: No meu tempo livre eu aprendo ma.
+
+- :mailbox:How to reach me: [![Linkedin Badge](https://img.shields.io/badge/-kakbar-blue?style=flat&logo=Linkedin&logoColor=white)](your-linkedin-url)
