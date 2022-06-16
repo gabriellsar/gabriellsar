@@ -12,8 +12,10 @@
     <img src="https://img.shields.io/badge/Twitter-yellow?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
   </a>
 </div>
-
-
-
-### Sobre mim: 
-📖 No momento estou aprendendo o básico de Unity e C#. 
+<div id="badges" align="center">
+<img src="https://komarev.com/ghpvc/?username=gabriellsar&style=flat-square&color=yellow" alt=""/>
+</div>
+<h1 align="center">
+  Seja bem vindo!!
+  <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="5px"/>
+</h1>
