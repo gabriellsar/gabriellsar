@@ -29,10 +29,12 @@
 
 ### 👨‍💻 Sobre mim :
 
-- :telescope: Sou estudante da PUC-Rio em
+- :telescope: Faço Engenharia de Produção na Pontifícia Universidade Católica do Rio de Janeiro (PUC-RIO).
 
-- :seedling: Exploring Technical Content Writing.
+- :zap: No meu tempo livre gosto de aprendender sobre diversos assuntos, no momento estou focando nos conceitos de Unity.
 
-- :zap: No meu tempo livre eu aprendo ma.
+- :mailbox:Como falar comigo: [![Linkedin Badge](https://img.shields.io/badge/-gabriellsar-yellow?style=flat&logo=Linkedin&logoColor=white)](your-linkedin-url)
 
-- :mailbox:How to reach me: [![Linkedin Badge](https://img.shields.io/badge/-kakbar-blue?style=flat&logo=Linkedin&logoColor=white)](your-linkedin-url)
+---
+
+### :hammer_and_wrench: Linguagens :
