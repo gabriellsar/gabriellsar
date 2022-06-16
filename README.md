@@ -31,7 +31,7 @@
 
 - :telescope: Faço Engenharia de Produção na Pontifícia Universidade Católica do Rio de Janeiro (PUC-RIO).
 
-- :zap: No meu tempo livre gosto de aprendender sobre diversos assuntos, no momento estou focando nos conceitos de Unity.
+- :zap: No meu tempo livre gosto de aprender sobre diversos assuntos, no momento estou focando nos conceitos de Unity.
 
 - :mailbox:Como falar comigo: [![Linkedin Badge](https://img.shields.io/badge/-gabriellsar-yellow?style=flat&logo=Linkedin&logoColor=white)](your-linkedin-url)
 
