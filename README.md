@@ -26,15 +26,6 @@
   <img src='https://media.giphy.com/media/mTPjPA6SSXgTsnZ1Dh/giphy.gif' width="300" height="200"/>
 </div>
 
-
-### 👨‍💻 Sobre mim :
-
-- :telescope: Faço Engenharia de Produção na Pontifícia Universidade Católica do Rio de Janeiro (PUC-RIO).
-
-- :zap: No meu tempo livre gosto de aprender sobre diversos assuntos, no momento estou focando nos conceitos de Unity.
-
-- :mailbox:Como falar comigo: [![Linkedin Badge](https://img.shields.io/badge/-gabriellsar-yellow?style=flat&logo=Linkedin&logoColor=white)](your-linkedin-url)
-
 ---
 
 ### :hammer_and_wrench: Linguagens :
