@@ -7,15 +7,11 @@
     <img src="https://img.shields.io/badge/LinkedIn-yellow?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
   </a>
   <a href="your-instagram-URL">
-    <img src="https://img.shields.io/badge/Instagram-purple?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram Badge"/>
+    <img src="https://img.shields.io/badge/gmail-purple?style=for-the-badge&logo=gmail&logoColor=white" alt="gmail Badge"/>
   </a>
   <a href="your-twitter-URL">
     <img src="https://img.shields.io/badge/Twitter-yellow?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
   </a>
-</div>
-
-<div id="badges" align="center">
-<img src="https://komarev.com/ghpvc/?username=gabriellsar&style=flat-square&color=yellow" alt=""/>
 </div>
 
 <h1 align="center">
@@ -28,4 +24,4 @@
 
 ---
 
-### :hammer_and_wrench: Linguagens :
+### :hammer_and_wrench: Linguagens:
