@@ -22,6 +22,20 @@
   <img src='https://media.giphy.com/media/mTPjPA6SSXgTsnZ1Dh/giphy.gif' width="300" height="200"/>
 </div>
 
+
+
 ---
 
-### :hammer_and_wrench: Linguagens:
+### 🛠️ Linguagens:
+<div>
+  <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" title="python" alt="python" width="40" height="40"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML" width="40" height="40"/>&nbsp;
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Csharp_Logo.png" title="C#" alt="C#" width="40" height="40"/>&nbsp;
+</div>
+
+---
+
+### 🔥 Status:
+
+[![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=gabriellsar&theme=shades-of-purple&hide_border=true&date_format=%5BY.%5Dn.j&locale=pt-br&background=00000000&stroke=DD272700)](https://git.io/streak-stats)
+
