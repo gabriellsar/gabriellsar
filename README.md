@@ -9,13 +9,13 @@
   <a href="your-instagram-URL">
     <img src="https://img.shields.io/badge/gmail-purple?style=for-the-badge&logo=gmail&logoColor=white" alt="gmail Badge"/>
   </a>
-  <a href="your-twitter-URL">
-    <img src="https://img.shields.io/badge/Twitter-yellow?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter Badge"/>
+  <a href="https://www.instagram.com/gabriellsar/">
+    <img src="https://img.shields.io/badge/instagram-yellow?style=for-the-badge&logo=instagram&logoColor=white" alt="instagram Badge"/>
   </a>
 </div>
 
 <h1 align="center">
-  Seja bem vindo :wave:
+  Seja bem vindo 👋
 </h1>
 
 <div align="center">
