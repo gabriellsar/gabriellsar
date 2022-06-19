@@ -6,7 +6,7 @@
   <a href="your-linkedin-URL">
     <img src="https://img.shields.io/badge/LinkedIn-yellow?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn Badge"/>
   </a>
-  <a href="your-instagram-URL">
+  <a href="mailto:gabrielsrosas@gmail.com">
     <img src="https://img.shields.io/badge/gmail-purple?style=for-the-badge&logo=gmail&logoColor=white" alt="gmail Badge"/>
   </a>
   <a href="https://www.instagram.com/gabriellsar/">
