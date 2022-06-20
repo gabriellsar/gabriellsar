@@ -30,7 +30,7 @@
 
 ---
 
-### 🛠️ Linguagens e Feramentas:
+### 🛠️ Linguagens e Ferramentas:
 <div>
   <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="csharp" width="60" height="60"/>
   <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" title="python" alt="python" width="60" height="60"/>&nbsp;
