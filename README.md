@@ -45,5 +45,3 @@
 ### 🔥 Status:
 
 [![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=gabriellsar&theme=shades-of-purple&hide_border=true&date_format=%5BY.%5Dn.j&locale=pt-br&background=00000000&stroke=DD272700)](https://git.io/streak-stats)
-
-
