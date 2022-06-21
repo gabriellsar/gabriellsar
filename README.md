@@ -1,3 +1,4 @@
+
 <div id="header" align="center">
   <img src= "https://media.giphy.com/media/lP8xu5t2DLGG045H8F/giphy.gif" width="200"/>
 </div>
@@ -51,5 +52,9 @@
 ---
 ### 🔥 Status:
 
+
 [![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=gabriellsar&theme=shades-of-purple&hide_border=true&date_format=%5BY.%5Dn.j&locale=pt-br&background=00000000&stroke=DD272700)](https://git.io/streak-stats)
+
+<!-- ![Gabriellsar Activity Graph](https://activity-graph.herokuapp.com/graph?username=gabriellsar&arear=true&area_color=FFFF00&hide_title=true&theme=shades-of-purple&bg_color=00000000&hide_border=true&line=FFFF00&point=800080)
+ -->
 
