@@ -55,6 +55,9 @@
 
 [![GitHub Streak](http://github-readme-streak-stats.herokuapp.com?user=gabriellsar&theme=shades-of-purple&hide_border=true&date_format=%5BY.%5Dn.j&locale=pt-br&background=00000000&stroke=DD272700)](https://git.io/streak-stats)
 
+[![Most Used Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=gabriellsar&layout=compact&langs_count=6&theme=shades-of-purple&hide_border=true&hide=jupyter%20notebook&bg_color=00000000)](https://git.io/streak-stats)
+
+
 <!-- ![Gabriellsar Activity Graph](https://activity-graph.herokuapp.com/graph?username=gabriellsar&arear=true&area_color=FFFF00&hide_title=true&theme=shades-of-purple&bg_color=00000000&hide_border=true&line=FFFF00&point=800080)
  -->
 
