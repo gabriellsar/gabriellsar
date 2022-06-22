@@ -1,4 +1,4 @@
-
+<!-- 
 <div id="header" align="center">
   <img src= "https://media.giphy.com/media/lP8xu5t2DLGG045H8F/giphy.gif" width="200"/>
 </div>
@@ -14,28 +14,32 @@
     <img src="https://img.shields.io/badge/instagram-yellow?style=for-the-badge&logo=instagram&logoColor=white" alt="instagram Badge"/>
   </a>
 </div>
+--- -->
 
 <h1 align="center">
   Seja bem vindo 👋
 </h1>
 
+<!-- 
 <div align="center">
   <img src='https://media.giphy.com/media/mTPjPA6SSXgTsnZ1Dh/giphy.gif' width="300" height="200"/>
 </div>
-
+ --- -->
+<!-- 
 ### 👨‍💻 Sobre mim :
 
 - 💻 01110000 01110010 01101111 01100111 01110010 01100001 01101101 01100001 01110010 
 - 📖 01000001 01110000 01110010 01100101 01101110 01100100 01100101 01110010 
 - ❓  01010001 01110101 01100101 01110011 01110100 01101001 01101111 01101110 01100001 01110010 
 
----
+--- -->
 
 ### 🛠️ Linguagens:
 <div>
-  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="csharp" width="60" height="60"/>
   <img src="https://github.com/devicons/devicon/blob/master/icons/python/python-original.svg" title="python" alt="python" width="60" height="60"/>&nbsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" title="HTML5" alt="HTML" width="60" height="60"/>&nbsp;
+  <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" title="CSS" alt="CSS" width="60" height="60"/>&nbsp;
+  <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg" alt="csharp" width="60" height="60"/>
 </div>
 
 ### 🧰 Ferramentas:
@@ -58,6 +62,6 @@
 [![Most Used Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=gabriellsar&layout=compact&langs_count=6&theme=shades-of-purple&hide_border=true&hide=jupyter%20notebook&bg_color=00000000)](https://git.io/streak-stats)
 
 
-<!-- ![Gabriellsar Activity Graph](https://activity-graph.herokuapp.com/graph?username=gabriellsar&arear=true&area_color=FFFF00&hide_title=true&theme=shades-of-purple&bg_color=00000000&hide_border=true&line=FFFF00&point=800080)
+<!-- ![Activity Graph](https://activity-graph.herokuapp.com/graph?username=gabriellsar&arear=true&area_color=FFFF00&hide_title=true&theme=shades-of-purple&bg_color=00000000&hide_border=true&line=FFFF00&point=800080)
  -->
 
