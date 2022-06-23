@@ -50,7 +50,7 @@
 
 ### 🎮 Game Engine:
 <div>  
-  <img src="https://www.vectorlogo.zone/logos/unity3d/unity3d-icon.svg" alt="unity" width="60" height="60"/> </a> </p>
+  <img src="https://www.vectorlogo.zone/logos/unity3d/unity3d-icon.svg" alt="unity" width="60" height="60"/> 
 </div>
 
 ---
