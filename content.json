@@ -7,17 +7,17 @@
     "topics"
   ],
   "topics": [
-    "IA/ML",
-    "DADOS",
-    "ENGENHARIA"
+    "AI/ML",
+    "DATA",
+    "ENGINEERING"
   ],
-  "hello": "Olá, eu sou o Gabriel.",
-  "lead": "Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo soluções de machine learning aplicado e levo modelos do notebook até a produção.",
+  "hello": "Hi, I'm Gabriel.",
+  "lead": "Computer Engineering student at PUC-Rio. I research and build applied machine learning solutions and take models from notebook to production.",
   "location": "RIO DE JANEIRO · UTC−3",
   "revision": "GS/README · REV 1.0",
   "links": [
     [
-      "VER PORTFÓLIO →",
+      "VIEW PORTFOLIO →",
       "https://gabriellsar.dev",
       "primary"
     ],

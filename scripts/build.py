@@ -320,52 +320,62 @@ def ellipsize(s, font, size, maxw, ls=0.0):
     return s.rstrip() + "…"
 
 
-PIN_GAP = 16
+PIN_W, PIN_GAP = 404, 16  # card width; transparent gap toward the neighbour and below
 
 
-def pinned_row(r, i, theme):
-    """Linha de repositório fixado: largura total, descrição inteira, meta numa linha só."""
-    P = 24
+def pinned_lines(r):
     desc = r["description"] or ""
-    lines = wrap(desc, "sans400", 14, W - 2 * P) if desc else []
-    h = 18 + 28 + 6 + max(1, len(lines)) * 22 + 18
-    d = Doc(W, h + PIN_GAP, theme, f"{r['name']}. {desc}".strip())
-    d.rect(0.5, 0.5, W - 1, h - 1, fill=d.c("surface"), stroke=d.c("line-strong"))
-    d.corner(0, 0)
+    lines = wrap(desc, "sans400", 13, PIN_W - 40) if desc else []
+    if len(lines) > 6:
+        lines = lines[:6]
+        lines[5] = ellipsize(lines[5] + " …", "sans400", 13, PIN_W - 40)
+    return lines
+
+
+def pinned_height(r):
+    return 18 + 28 + 8 + max(1, len(pinned_lines(r))) * 20 + 14 + 1 + 10 + 16 + 16
+
+
+def pinned_card(r, i, theme, h):
+    """2x2 grid card. Left cards carry the gap on their right, right cards on their left,
+    so the outer edges line up with the full-width blocks."""
+    left = i % 2 == 1
+    ox = 0 if left else PIN_GAP
+    cw = PIN_W
+    desc = r["description"] or ""
+    d = Doc(cw + PIN_GAP, h + PIN_GAP, theme, f"{r['name']}. {desc}".strip())
+    d.rect(ox + 0.5, 0.5, cw - 1, h - 1, fill=d.c("surface"), stroke=d.c("line-strong"))
+    d.corner(ox, 0)
+    P = 20
     top = 18
-    y = baseline(top, 22, 28, "sans300")
-    x = P + d.text(P, baseline(top, 12, 28, "mono400"), f"R/{i:02d}", "mono400", 12, d.c("muted"), 0.14) + 16
-    # meta à direita, montada da direita para a esquerda
-    fork = "FORK" if r["forks"] == 1 else "FORKS"
-    est = "ESTRELA" if r["stars"] == 1 else "ESTRELAS"
-    parts = [f"{r['stars']} {est}", f"{r['forks']} {fork}", f"ATUALIZADO {r['pushed']}"]
+    tw = 0
     if r["language"]:
-        parts.insert(0, r["language"].upper())
-    meta = " · ".join(parts)
-    mw = FONT["mono400"].width(meta, 11, 0.12)
-    mx = W - P - mw
-    my = baseline(top, 11, 28, "mono400")
-    if r["language"]:
-        lw = FONT["mono400"].width(parts[0], 11, 0.12)
-        d.add(f'<circle cx="{f2(mx - 11)}" cy="{f2(top + 14)}" r="3.5" fill="{d.c("accent")}"/>')
-        d.text(mx, my, parts[0], "mono400", 11, d.c("text"), 0.12)
-        rest = " · " + " · ".join(parts[1:])
-        d.text(mx + lw + 0.12 * 11, my, rest, "mono400", 11, d.c("muted"), 0.12)
-        mx -= 17
-    else:
-        d.text(mx, my, meta, "mono400", 11, d.c("muted"), 0.12)
-    size = 22
-    name = r["name"]
-    while FONT["sans300"].width(name, size, -0.01) > mx - x - 24 and size > 15:
+        t = r["language"].upper()
+        tw = FONT["mono400"].width(t, 11, 0.14) + 20 + 15
+        tag(d, ox + cw - P - tw, top + 1, t, "accent")
+    size = 20
+    while FONT["sans300"].width(r["name"], size, -0.01) > cw - 2 * P - tw - 12 and size > 14:
         size -= 1
-    d.text(x, y, name, "sans300", size, d.c("text-strong"), extra=' letter-spacing="-0.01em"')
-    top += 28 + 6
+    d.text(ox + P, baseline(top, size, 28, "sans300"), r["name"], "sans300", size, d.c("text-strong"),
+           extra=' letter-spacing="-0.01em"')
+    top += 28 + 8
+    lines = pinned_lines(r)
     if lines:
         for line in lines:
-            d.text(P, baseline(top, 14, 22, "sans400"), line, "sans400", 14, d.c("text"))
-            top += 22
+            d.text(ox + P, baseline(top, 13, 20, "sans400"), line, "sans400", 13, d.c("text"))
+            top += 20
     else:
-        d.text(P, baseline(top, 12, 22, "mono400"), "[SEM DESCRIÇÃO]", "mono400", 12, d.c("muted"), 0.08)
+        d.text(ox + P, baseline(top, 12, 20, "mono400"), "[NO DESCRIPTION]", "mono400", 12, d.c("muted"), 0.08)
+    mtop = h - 16 - 16 - 10
+    d.hline(ox + P, ox + cw - P, mtop, d.c("line"))
+    mtop += 10
+    star = "STAR" if r["stars"] == 1 else "STARS"
+    fork = "FORK" if r["forks"] == 1 else "FORKS"
+    x = ox + P + d.text(ox + P, baseline(mtop, 11, 16, "mono400"), f"R/{i:02d}", "mono400", 11, d.c("accent"), 0.12)
+    d.text(x, baseline(mtop, 11, 16, "mono400"), f" · {r['stars']} {star} · {r['forks']} {fork}", "mono400", 11,
+           d.c("muted"), 0.12)
+    d.text(ox + cw - P, baseline(mtop, 11, 16, "mono400"), r["pushed"], "mono400", 11, d.c("muted"),
+           0.12, anchor="end")
     return d
 
 
@@ -389,7 +399,7 @@ def footer(C, theme):
     d.hline(0, W, 0, d.c("line"))
     bw = d.text(0, baseline(16, 15, 40, "mono500"), C["brand"], "mono500", 15, d.c("text-strong"))
     d.rect(bw + 3, 28, 9, 16, fill=d.c("accent"), extra=' class="blink"')
-    label(d, W, 28, f"{C['revision']} · SISTEMA VISUAL GABRIEL.S", size=11, anchor="end")
+    label(d, W, 28, f"{C['revision']} · VISUAL SYSTEM GABRIEL.S", size=11, anchor="end")
     return d
 
 
@@ -453,16 +463,16 @@ def demo_stats():
                 ("um-nome-de-repositorio-bem-comprido", "Texto longo de exemplo que precisa quebrar em várias linhas para testar o limite de três linhas e as reticências no final do card.", 12, "TypeScript")]]}
 
 
-MONTHS = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"]
+MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
 
 
 def activity(stats, theme, today):
     empty = stats is None
-    d = Doc(W, 10, theme, "Atividade no GitHub")
+    d = Doc(W, 10, theme, "GitHub activity")
     # --- stats
     if empty:
-        vals = [("CONTRIBUIÇÕES", "[—]", None, "AGUARDANDO ACTION"), ("REPOSITÓRIOS", "[—]", None, "PÚBLICOS"),
-                ("ESTRELAS", "[—]", None, "EM REPOS PÚBLICOS"), ("SEQUÊNCIA", "[—]", None, "DIAS SEGUIDOS")]
+        vals = [("CONTRIBUTIONS", "[—]", None, "WAITING FOR ACTION"), ("REPOSITORIES", "[—]", None, "PUBLIC"),
+                ("STARS", "[—]", None, "ON PUBLIC REPOS"), ("STREAK", "[—]", None, "DAYS IN A ROW")]
     else:
         counts = [c for _, c in stats["days"]]
         half = len(counts) // 2
@@ -477,11 +487,11 @@ def activity(stats, theme, today):
         while i >= 0 and counts[i] > 0:
             streak += 1
             i -= 1
-        fmt = lambda n: f"{n:,}".replace(",", ".")
-        vals = [("CONTRIBUIÇÕES", fmt(stats["total"]), delta, "VS 6M ANT." if delta else "12 MESES"),
-                ("REPOSITÓRIOS", fmt(stats["repos"]), None, "PÚBLICOS"),
-                ("ESTRELAS", fmt(stats["stars"]), None, "EM REPOS PÚBLICOS"),
-                ("SEQUÊNCIA", fmt(streak), None, "DIAS SEGUIDOS")]
+        fmt = lambda n: f"{n:,}"
+        vals = [("CONTRIBUTIONS", fmt(stats["total"]), delta, "VS PREV 6M" if delta else "12 MONTHS"),
+                ("REPOSITORIES", fmt(stats["repos"]), None, "PUBLIC"),
+                ("STARS", fmt(stats["stars"]), None, "ON PUBLIC REPOS"),
+                ("STREAK", fmt(streak), None, "DAYS IN A ROW")]
     gap = 16
     sw = (W - 3 * gap) / 4
     for i, (lab, val, delta, note) in enumerate(vals):
@@ -513,8 +523,8 @@ def activity(stats, theme, today):
             weeks.append(sum(c for _, c in chunk))
             start_dates.append(chunk[0][0])
     n = len(weeks)
-    label(d, 0, top, f"FIG.01 — RELEVO DE CONTRIBUIÇÕES · {n} SEMANAS", size=11)
-    label(d, W, top, "SEM DADOS" if empty else f"ATUALIZADO {today}", size=11, anchor="end")
+    label(d, 0, top, f"FIG.01 — CONTRIBUTION RELIEF · {n} WEEKS", size=11)
+    label(d, W, top, "NO DATA" if empty else f"UPDATED {today}", size=11, anchor="end")
     top += 16 + 12
     rows = 11
     gx0 = 12
@@ -541,17 +551,17 @@ def activity(stats, theme, today):
     top += 14 + 10
     if not empty and max(weeks) > 0:
         y, mo, da = start_dates[pk].split("-")
-        label(d, 0, top, f"PICO · SEMANA DE {da}/{mo}/{y} · {weeks[pk]} CONTRIBUIÇÕES", color=d.c("signal"),
+        label(d, 0, top, f"PEAK · WEEK OF {y}-{mo}-{da} · {weeks[pk]} CONTRIBUTIONS", color=d.c("signal"),
               size=11, ls=0.12)
     else:
-        label(d, 0, top, "[SEM PICO]", size=11, ls=0.12)
-    label(d, W, top, "1 COLUNA = 1 SEMANA", size=11, anchor="end")
+        label(d, 0, top, "[NO PEAK]", size=11, ls=0.12)
+    label(d, W, top, "1 COLUMN = 1 WEEK", size=11, anchor="end")
     top += 16 + 16
     d.hline(0, W, top, d.c("line"))
     top += 32
 
     # --- linguagens
-    label(d, 0, top, "LINGUAGENS · BYTES EM REPOS PÚBLICOS")
+    label(d, 0, top, "LANGUAGES · BYTES ON PUBLIC REPOS")
     top += 16 + 12
     segs, sg = 60, 3
     segw = (W - (segs - 1) * sg) / segs
@@ -560,7 +570,7 @@ def activity(stats, theme, today):
         tot = sum(stats["langs"].values())
         srt = sorted(stats["langs"].items(), key=lambda kv: -kv[1])
         top4, rest = srt[:4], sum(v for _, v in srt[4:])
-        items = [(k, v / tot) for k, v in top4] + ([("Outros", rest / tot)] if rest else [])
+        items = [(k, v / tot) for k, v in top4] + ([("Other", rest / tot)] if rest else [])
     # distribui segmentos por maior resto
     alloc = [int(p * segs) for _, p in items]
     order = sorted(range(len(items)), key=lambda i: -(items[i][1] * segs - alloc[i]))
@@ -581,7 +591,7 @@ def activity(stats, theme, today):
             x += d.text(x, baseline(top, 11, 16, "mono400"), k.upper(), "mono400", 11, d.c("text"), 0.14) + 8
             x += d.text(x, baseline(top, 11, 16, "mono400"), f"{p * 100:.0f}%", "mono400", 11, d.c("muted"), 0.04) + 24
     else:
-        label(d, 0, top, "[SEM DADOS]", size=11)
+        label(d, 0, top, "[NO DATA]", size=11)
     d.h = top + 16 + 4
     return d
 
@@ -593,24 +603,24 @@ def pic(name, alt, attr='width="100%"'):
 
 
 def readme(C, pinned):
-    out = ["<!-- Gerado por scripts/build.py a partir de content.json. Não edite à mão: a Action reescreve. -->", ""]
+    out = ["<!-- Generated by scripts/build.py from content.json. Do not edit by hand: the Action rewrites it. -->", ""]
     out.append(f'<a href="{C["links"][0][1]}">' + pic("hero", f"{C['prompt']}:~$ {C.get('commands', ['hello'])[0]} — {C['hello']} {C['lead']}") + "</a>")
     out += ["", "<br><br>", ""]
     n = 0
     if pinned:
         n += 1
-        out += [pic(f"section-{n}", f"0x{n:02d} · Repositórios fixados"), "", "<br>", ""]
+        out += [pic(f"section-{n}", f"0x{n:02d} · Pinned repositories"), "", "<br>", ""]
         for i, r in enumerate(pinned, 1):
             alt = f"{r['name']}" + (f" — {r['description']}" if r["description"] else "")
-            out.append(f'<a href="{r["url"]}">' + pic(f"pinned-{i}", alt) + "</a>")
+            out.append(f'<a href="{r["url"]}">' + pic(f"pinned-{i}", alt, 'width="49.5%"') + "</a>")
         out += ["", "<br><br>", ""]
     n += 1
-    out += [pic(f"section-{n}", f"0x{n:02d} · Atividade"), "", "<br>", "",
-            pic("activity", "Atividade no GitHub nos últimos 12 meses: contribuições, repositórios, estrelas, "
-                            "sequência, relevo de contribuições por semana e linguagens. Atualizado todo dia."),
+    out += [pic(f"section-{n}", f"0x{n:02d} · Activity"), "", "<br>", "",
+            pic("activity", "GitHub activity over the last 12 months: contributions, repositories, stars, "
+                            "streak, weekly contribution relief and languages. Updated daily."),
             "", "<br><br><br>", ""]
     n += 1
-    out += [pic(f"section-{n}", f"0x{n:02d} · Contato"), "", "<br>", ""]
+    out += [pic(f"section-{n}", f"0x{n:02d} · Contact"), "", "<br>", ""]
     for i, (t, href, _) in enumerate(C["links"], 1):
         out.append(f'<a href="{href}">' + pic(f"link-{i}", t.replace("→", "").strip().capitalize(), 'height="44"') + "</a>")
     out += ["", "<br><br><br>", "", pic("footer", f"{C['brand']} · {C['revision']}"), ""]
@@ -629,8 +639,8 @@ def main():
     today = dt.date.today().isoformat()
     stats = demo_stats() if demo else fetch_stats(C["login"], set(C.get("ignore_languages", [])))
     pinned = (stats or {}).get("pinned") or []
-    secs = ([("Repositórios fixados", f"{len(pinned):02d} REPOS")] if pinned else []) + [
-        ("Atividade", "GITHUB · 12 MESES"), ("Contato", C["location"])]
+    secs = ([("Pinned repositories", f"{len(pinned):02d} REPOS")] if pinned else []) + [
+        ("Activity", "GITHUB · 12 MONTHS"), ("Contact", C["location"])]
     for old in ASSETS.glob("*.svg"):
         old.unlink()
     for th in THEMES:
@@ -638,7 +648,8 @@ def main():
         for i, (t, s) in enumerate(secs, 1):
             write(f"section-{i}-{th}.svg", section(th, f"0x{i:02d}", t, s))
         for i, r in enumerate(pinned, 1):
-            write(f"pinned-{i}-{th}.svg", pinned_row(r, i, th))
+            pair = pinned[(i - 1) // 2 * 2:(i - 1) // 2 * 2 + 2]
+            write(f"pinned-{i}-{th}.svg", pinned_card(r, i, th, max(pinned_height(p) for p in pair)))
         write(f"activity-{th}.svg", activity(stats, th, today))
         for i, (t, _, v) in enumerate(C["links"], 1):
             write(f"link-{i}-{th}.svg", button(th, t, v))
