@@ -4,7 +4,18 @@
 
 <br><br>
 
-<picture><source media="(prefers-color-scheme: light)" srcset="assets/section-1-light.svg"><img src="assets/section-1-dark.svg" width="100%" alt="0x01 · Atividade"></picture>
+<picture><source media="(prefers-color-scheme: light)" srcset="assets/section-1-light.svg"><img src="assets/section-1-dark.svg" width="100%" alt="0x01 · Repositórios fixados"></picture>
+
+<br>
+
+<a href="https://github.com/gabriellsar/predictive-cloud-autoscaling"><picture><source media="(prefers-color-scheme: light)" srcset="assets/pinned-1-light.svg"><img src="assets/pinned-1-dark.svg" width="49%" alt="predictive-cloud-autoscaling — Predictive cloud autoscaling: neural-network (GRU) workload forecasting vs. classical methods (ARIMA, Holt-Winters) to cut operating cost under SLA constraints, evaluated in a simulated data center on the Alibaba cluster trace. Undergraduate thesis, PUC-Rio."></picture></a>
+<a href="https://github.com/gabriellsar/windanalyzer"><picture><source media="(prefers-color-scheme: light)" srcset="assets/pinned-2-light.svg"><img src="assets/pinned-2-dark.svg" width="49%" alt="windanalyzer — Interactive R/Shiny tool for probabilistic wind power modeling in Brazil: MERRA-2 wind series with INMET bias correction, nonparametric speed–power modeling (K-means, KDE) and Monte Carlo generation scenarios. Registered at INPI."></picture></a>
+<a href="https://github.com/gabriellsar/kalman-hackathon-vx"><picture><source media="(prefers-color-scheme: light)" srcset="assets/pinned-3-light.svg"><img src="assets/pinned-3-dark.svg" width="49%" alt="kalman-hackathon-vx — Kalman reads Brazil’s official gazette (DOU) every day, checks each act against a company’s obligations, and proposes what changes, with human approval and tasks that have a deadline and an owner."></picture></a>
+<a href="https://github.com/gabriellsar/portfolio"><picture><source media="(prefers-color-scheme: light)" srcset="assets/pinned-4-light.svg"><img src="assets/pinned-4-dark.svg" width="49%" alt="portfolio — Personal portfolio: applied ML, data science and cloud. Built with Astro, React and MDX, with a terminal-style design system, deployed on Cloudflare Workers."></picture></a>
+
+<br><br>
+
+<picture><source media="(prefers-color-scheme: light)" srcset="assets/section-2-light.svg"><img src="assets/section-2-dark.svg" width="100%" alt="0x02 · Atividade"></picture>
 
 <br>
 
@@ -12,7 +23,7 @@
 
 <br><br><br>
 
-<picture><source media="(prefers-color-scheme: light)" srcset="assets/section-2-light.svg"><img src="assets/section-2-dark.svg" width="100%" alt="0x02 · Contato"></picture>
+<picture><source media="(prefers-color-scheme: light)" srcset="assets/section-3-light.svg"><img src="assets/section-3-dark.svg" width="100%" alt="0x03 · Contato"></picture>
 
 <br>
 
