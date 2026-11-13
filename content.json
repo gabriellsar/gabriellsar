@@ -2,6 +2,10 @@
   "login": "gabriellsar",
   "brand": "gabriellsar",
   "prompt": "gabriel@arch",
+  "commands": [
+    "hello",
+    "topics"
+  ],
   "hello": "Olá, eu sou o Gabriel.",
   "lead": "Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo soluções de machine learning aplicado e levo modelos do notebook até a produção.",
   "location": "RIO DE JANEIRO · UTC−3",

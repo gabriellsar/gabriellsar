@@ -253,39 +253,16 @@ def peak_ring(d, cx, cy, r=8):
 
 # ---------------------------------------------------------------- blocos
 def hero(C, theme):
-    """Sessão de terminal: ./hello digita, a saudação aparece, prompt com cursor.
-
-    As animações começam e terminam no estado visível, então um render estático mostra tudo.
-    """
+    """Sessão de terminal estática: hello, a saudação, topics com cursor piscando."""
     P = 32
-    d = Doc(W, 10, theme, f"{C['prompt']}:~$ ./hello — {C['hello']} {C['lead']}", bg="bg")
-    T = 3.0  # duração total da sequência, em segundos
-    css = []
+    cmds = C.get("commands", ["hello", "topics"])
+    d = Doc(W, 10, theme, f"{C['prompt']}:~$ {cmds[0]} — {C['hello']} {C['lead']}", bg="bg")
 
-    def reveal(name, at):
-        k = at / T * 100
-        css.append(f"@keyframes {name}{{0%{{opacity:1}}0.1%{{opacity:0}}{k:.2f}%{{opacity:0}}{min(k + 6, 100):.2f}%{{opacity:1}}100%{{opacity:1}}}}"
-                   f".{name}{{animation:{name} {T}s linear 1;}}")
-        return f' class="{name}"'
-
-    def typing(name, x, top, w, h, start, dur, n):
-        a, b = start / T * 100, (start + dur) / T * 100
-        css.append(f"@keyframes {name}{{0%{{transform:scaleX(0)}}0.1%{{transform:scaleX(1)}}"
-                   f"{a:.2f}%{{transform:scaleX(1);animation-timing-function:steps({n},end)}}"
-                   f"{b:.2f}%{{transform:scaleX(0)}}100%{{transform:scaleX(0)}}}}"
-                   f".{name}{{transform-box:fill-box;transform-origin:right;animation:{name} {T}s linear 1;}}")
-        d.rect(x, top, w + 2, h, fill=d.c("bg"), extra=f' class="{name}"')
-
-    def prompt(top, cmd, name=None, start=0.0):
+    def prompt(top, cmd):
         y = baseline(top, 15, 24, "mono400")
         x = P + d.text(P, y, C["prompt"], "mono400", 15, d.c("accent"))
         x += d.text(x, y, ":~$", "mono400", 15, d.c("muted")) + 10
-        cw = 0
-        if cmd:
-            cw = d.text(x, y, cmd, "mono400", 15, d.c("text-strong"))
-            if name:
-                typing(name, x, top, cw, 24, start, 0.08 * len(cmd), len(cmd))
-        return x + cw
+        return x + d.text(x, y, cmd, "mono400", 15, d.c("text-strong"))
 
     # top bar
     bw = d.text(P, baseline(0, 15, 56, "mono500"), C["brand"], "mono500", 15, d.c("text-strong"))
@@ -294,33 +271,26 @@ def hero(C, theme):
     d.hline(1, W - 1, 56, d.c("line"))
 
     top = 56 + 40
-    prompt(top, "./hello", "type1", 0.4)
+    prompt(top, cmds[0])
     top += 24 + 14
-
     size = 72
     while FONT["sans200"].width(C["hello"], size, -0.035) > W - 2 * P and size > 40:
         size -= 2
-    d.add(f"<g{reveal('out1', 1.2)}>")
     d.text(P, baseline(top, size, size * 1.02, "sans200"), C["hello"], "sans200", size, d.c("text-strong"),
            extra=' letter-spacing="-0.035em"')
     top += size * 1.02 + 12
     for line in wrap(C["lead"], "sans300", 19, 680):
         d.text(P, baseline(top, 19, 30, "sans300"), line, "sans300", 19, d.c("text"))
         top += 30
-    d.add("</g>")
     top += 28
-
-    d.add(f"<g{reveal('out2', 1.7)}>")
-    end = prompt(top, "")
-    d.rect(end, top + 4, 9, 16, fill=d.c("accent"), extra=' class="blink"')
-    d.add("</g>")
+    end = prompt(top, cmds[1])
+    d.rect(end + 8, top + 4, 9, 16, fill=d.c("accent"), extra=' class="blink"')
     top += 24 + 40
 
     d.h = top
     d.els.insert(0, f'<rect x="0.5" y="0.5" width="{W - 1}" height="{f2(d.h - 1)}" fill="none" stroke="{d.c("line-strong")}" stroke-width="1"/>')
     d.els.insert(1, f'<rect x="0" y="0" width="12" height="2" fill="{d.c("accent")}"/>')
     d.els.insert(2, f'<rect x="0" y="0" width="2" height="12" fill="{d.c("accent")}"/>')
-    d.css = "".join(css)
     return d
 
 
@@ -613,7 +583,7 @@ def pic(name, alt, attr='width="100%"'):
 
 def readme(C, pinned):
     out = ["<!-- Gerado por scripts/build.py a partir de content.json. Não edite à mão: a Action reescreve. -->", ""]
-    out.append(f'<a href="{C["links"][0][1]}">' + pic("hero", f"{C['prompt']}:~$ ./hello — {C['hello']} {C['lead']}") + "</a>")
+    out.append(f'<a href="{C["links"][0][1]}">' + pic("hero", f"{C['prompt']}:~$ {C.get('commands', ['hello'])[0]} — {C['hello']} {C['lead']}") + "</a>")
     out += ["", "<br><br>", ""]
     n = 0
     if pinned:
