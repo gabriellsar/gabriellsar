@@ -283,8 +283,14 @@ def hero(C, theme):
         d.text(P, baseline(top, 19, 30, "sans300"), line, "sans300", 19, d.c("text"))
         top += 30
     top += 28
-    end = prompt(top, cmds[1])
-    d.rect(end + 8, top + 4, 9, 16, fill=d.c("accent"), extra=' class="blink"')
+    prompt(top, cmds[1])
+    top += 24 + 12
+    x = P
+    for t in C.get("topics", []):
+        x += tag(d, x, top, t, "neutral", dot=False) + 8
+    top += 26 + 20
+    end = prompt(top, "")
+    d.rect(end, top + 4, 9, 16, fill=d.c("accent"), extra=' class="blink"')
     top += 24 + 40
 
     d.h = top
