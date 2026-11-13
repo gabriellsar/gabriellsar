@@ -1,0 +1,44 @@
+{
+  "login": "gabriellsar",
+  "brand": "gabriel.r",
+  "prompt": "gabriel.r@rio",
+  "hello": "Olá, eu sou o Gabriel.",
+  "lead": "Engenharia de Computação na PUC-Rio. Pesquisa em ML aplicado, gráficos procedurais e software que vira produto.",
+  "status": "ABERTO A ESTÁGIOS",
+  "status_areas": [
+    "DADOS",
+    "IA",
+    "ENGENHARIA"
+  ],
+  "location": "RIO DE JANEIRO · UTC−3",
+  "revision": "GS/README · REV 1.0",
+  "hero_seed": 315,
+  "links": [
+    [
+      "VER PORTFÓLIO →",
+      "https://gabriellsar.dev",
+      "primary"
+    ],
+    [
+      "LINKEDIN",
+      "https://www.linkedin.com/in/gabriellsar",
+      "secondary"
+    ],
+    [
+      "EMAIL",
+      "mailto:gabrielsrosas@gmail.com",
+      "secondary"
+    ],
+    [
+      "CV.PDF",
+      "https://gabriellsar.dev/cv.pdf",
+      "secondary"
+    ]
+  ],
+  "ignore_languages": [
+    "HTML",
+    "CSS",
+    "Jupyter Notebook",
+    "TeX"
+  ]
+}
