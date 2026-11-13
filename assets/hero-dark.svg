@@ -5,28 +5,28 @@
 <rect x="0.5" y="0.5" width="839" height="482.44" fill="none" stroke="#263638" stroke-width="1"/>
 <rect x="0" y="0" width="12" height="2" fill="#7cf0d4"/>
 <rect x="0" y="0" width="2" height="12" fill="#7cf0d4"/>
-<text x="32" y="33.33" font-family="mono500" font-size="15" fill="#f4fbfb">gabriellsar</text>
+<text x="32" y="33.33" xml:space="preserve" font-family="mono500" font-size="15" fill="#f4fbfb">gabriellsar</text>
 <rect x="134" y="20" width="9" height="16" fill="#7cf0d4"/>
-<text x="614.32 623.2 632.08 640.96 649.84 658.72 667.6 676.48 685.36 694.24 703.12 712 720.88 729.76 738.64 747.52 756.4 765.28 774.16 783.04 791.92 800.8" y="32.26" font-family="mono400" font-size="12" fill="#8fa3a6">RIO DE JANEIRO · UTC−3</text>
+<text x="614.32 623.2 632.08 640.96 649.84 658.72 667.6 676.48 685.36 694.24 703.12 712 720.88 729.76 738.64 747.52 756.4 765.28 774.16 783.04 791.92 800.8" y="32.26" xml:space="preserve" font-family="mono400" font-size="12" fill="#8fa3a6">RIO DE JANEIRO · UTC−3</text>
 <rect x="1" y="56" width="838" height="1" fill="#1a2628"/>
-<text x="32" y="113.33" font-family="mono400" font-size="15" fill="#7cf0d4">gabriel@arch</text>
-<text x="140" y="113.33" font-family="mono400" font-size="15" fill="#8fa3a6">:~$</text>
-<text x="177" y="113.33" font-family="mono400" font-size="15" fill="#f4fbfb">hello</text>
-<text x="32" y="196.28" font-family="sans200" font-size="72" fill="#f4fbfb" letter-spacing="-0.035em">Olá, eu sou o Gabriel.</text>
-<text x="32" y="241.19" font-family="sans300" font-size="19" fill="#d3e1e2">Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo</text>
-<text x="32" y="271.19" font-family="sans300" font-size="19" fill="#d3e1e2">soluções de machine learning aplicado e levo modelos do notebook até a</text>
-<text x="32" y="301.18" font-family="sans300" font-size="19" fill="#d3e1e2">produção.</text>
-<text x="32" y="354.76" font-family="mono400" font-size="15" fill="#7cf0d4">gabriel@arch</text>
-<text x="140" y="354.76" font-family="mono400" font-size="15" fill="#8fa3a6">:~$</text>
-<text x="177" y="354.76" font-family="mono400" font-size="15" fill="#f4fbfb">topics</text>
+<text x="32" y="113.33" xml:space="preserve" font-family="mono400" font-size="15" fill="#7cf0d4">gabriel@arch</text>
+<text x="140" y="113.33" xml:space="preserve" font-family="mono400" font-size="15" fill="#8fa3a6">:~$</text>
+<text x="177" y="113.33" xml:space="preserve" font-family="mono400" font-size="15" fill="#f4fbfb">hello</text>
+<text x="32" y="196.28" xml:space="preserve" font-family="sans200" font-size="72" fill="#f4fbfb" letter-spacing="-0.035em">Olá, eu sou o Gabriel.</text>
+<text x="32" y="241.19" xml:space="preserve" font-family="sans300" font-size="19" fill="#d3e1e2">Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo</text>
+<text x="32" y="271.19" xml:space="preserve" font-family="sans300" font-size="19" fill="#d3e1e2">soluções de machine learning aplicado e levo modelos do notebook até a</text>
+<text x="32" y="301.18" xml:space="preserve" font-family="sans300" font-size="19" fill="#d3e1e2">produção.</text>
+<text x="32" y="354.76" xml:space="preserve" font-family="mono400" font-size="15" fill="#7cf0d4">gabriel@arch</text>
+<text x="140" y="354.76" xml:space="preserve" font-family="mono400" font-size="15" fill="#8fa3a6">:~$</text>
+<text x="177" y="354.76" xml:space="preserve" font-family="mono400" font-size="15" fill="#f4fbfb">topics</text>
 <rect x="32.5" y="373.94" width="58.16" height="25" fill="none" stroke="#263638" stroke-width="1"/>
-<text x="42 50.14 58.28 66.42 74.56" y="390.35" font-family="mono400" font-size="11" fill="#8fa3a6">IA/ML</text>
+<text x="42 50.14 58.28 66.42 74.56" y="390.35" xml:space="preserve" font-family="mono400" font-size="11" fill="#8fa3a6">IA/ML</text>
 <rect x="99.66" y="373.94" width="58.16" height="25" fill="none" stroke="#263638" stroke-width="1"/>
-<text x="109.16 117.3 125.44 133.58 141.72" y="390.35" font-family="mono400" font-size="11" fill="#8fa3a6">DADOS</text>
+<text x="109.16 117.3 125.44 133.58 141.72" y="390.35" xml:space="preserve" font-family="mono400" font-size="11" fill="#8fa3a6">DADOS</text>
 <rect x="166.82" y="373.94" width="98.86" height="25" fill="none" stroke="#263638" stroke-width="1"/>
-<text x="176.32 184.46 192.6 200.74 208.88 217.02 225.16 233.3 241.44 249.58" y="390.35" font-family="mono400" font-size="11" fill="#8fa3a6">ENGENHARIA</text>
-<text x="32" y="436.76" font-family="mono400" font-size="15" fill="#7cf0d4">gabriel@arch</text>
-<text x="140" y="436.76" font-family="mono400" font-size="15" fill="#8fa3a6">:~$</text>
-<text x="177" y="436.76" font-family="mono400" font-size="15" fill="#f4fbfb"></text>
+<text x="176.32 184.46 192.6 200.74 208.88 217.02 225.16 233.3 241.44 249.58" y="390.35" xml:space="preserve" font-family="mono400" font-size="11" fill="#8fa3a6">ENGENHARIA</text>
+<text x="32" y="436.76" xml:space="preserve" font-family="mono400" font-size="15" fill="#7cf0d4">gabriel@arch</text>
+<text x="140" y="436.76" xml:space="preserve" font-family="mono400" font-size="15" fill="#8fa3a6">:~$</text>
+<text x="177" y="436.76" xml:space="preserve" font-family="mono400" font-size="15" fill="#f4fbfb"></text>
 <rect x="177" y="423.44" width="9" height="16" fill="#7cf0d4" class="blink"/>
 </svg>
