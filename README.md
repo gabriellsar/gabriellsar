@@ -1,6 +1,6 @@
 <!-- Gerado por scripts/build.py a partir de content.json. Não edite à mão: a Action reescreve. -->
 
-<a href="https://gabriellsar.dev"><picture><source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg"><img src="assets/hero-dark.svg" width="100%" alt="gabriel@arch:~$ ./hello — Olá, eu sou o Gabriel. Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo soluções de machine learning aplicado e levo modelos do notebook até a produção."></picture></a>
+<a href="https://gabriellsar.dev"><picture><source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg"><img src="assets/hero-dark.svg" width="100%" alt="gabriel@arch:~$ hello — Olá, eu sou o Gabriel. Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo soluções de machine learning aplicado e levo modelos do notebook até a produção."></picture></a>
 
 <br><br>
 
