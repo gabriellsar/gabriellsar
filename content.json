@@ -1,10 +1,9 @@
 {
   "login": "gabriellsar",
-  "brand": "gabriel.r",
-  "prompt": "gabriel.r@rio",
+  "brand": "gabriellsar",
+  "prompt": "gabriel@arch",
   "hello": "Olá, eu sou o Gabriel.",
   "lead": "Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo soluções de machine learning aplicado e levo modelos do notebook até a produção.",
-  "status": "ABERTO A ESTÁGIOS",
   "status_areas": [
     "DADOS",
     "IA",
