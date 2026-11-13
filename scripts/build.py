@@ -529,24 +529,25 @@ def activity(stats, theme, today):
     label(d, W, top, "SEM DADOS" if empty else f"ATUALIZADO {today}", size=11, anchor="end")
     top += 16 + 12
     rows = 11
-    px = W / n
+    gx0 = 12
+    px = (W - 2 * gx0) / n
     py = px * 0.8
     mx = max(weeks) or 1
     raw = [w / mx for w in weeks]
     sm = [(raw[max(0, i - 1)] + 2 * raw[i] + raw[min(n - 1, i + 1)]) / 4 for i in range(n)]
     hs = [0.35 + (rows - 1.6) * (0.65 * math.sqrt(s) + 0.35 * math.sqrt(r_)) for s, r_ in zip(sm, raw)]
-    terrain_dots(d, 0, top, hs, rows, px, py, empty=empty)
+    terrain_dots(d, gx0, top, hs, rows, px, py, empty=empty)
     if not empty and max(weeks) > 0:
         pk = max(range(n), key=lambda i: weeks[i])
         ph = math.floor(hs[pk])
-        peak_ring(d, pk * px + px / 2, top + (rows - 1 - ph) * py + py / 2, r=8 * px / 10 + 1)
+        peak_ring(d, gx0 + pk * px + px / 2, top + (rows - 1 - ph) * py + py / 2, r=8 * px / 10 + 1)
     top += rows * py + 10
     if start_dates:
         last = None
         for i, sd in enumerate(start_dates):
             m = int(sd[5:7])
             if m != last and i < n - 2:
-                d.text(i * px + px / 2, baseline(top, 10, 14, "mono400"), MONTHS[m - 1], "mono400", 10,
+                d.text(gx0 + i * px + px / 2, baseline(top, 10, 14, "mono400"), MONTHS[m - 1], "mono400", 10,
                        d.c("muted"), 0.1)
                 last = m
     top += 14 + 10
