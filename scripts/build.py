@@ -125,7 +125,7 @@ class Doc:
             x -= w
         elif anchor == "middle":
             x -= w / 2
-        attrs = f'font-family="{font}" font-size="{f2(size)}" fill="{color}"{extra}'
+        attrs = f'xml:space="preserve" font-family="{font}" font-size="{f2(size)}" fill="{color}"{extra}'
         if ls and len(s) > 1:
             xs, cx = [], x
             for ch in s:
@@ -320,47 +320,52 @@ def ellipsize(s, font, size, maxw, ls=0.0):
     return s.rstrip() + "…"
 
 
-PIN_W, PIN_H, PIN_GAP = 410, 240, 16
+PIN_GAP = 16
 
 
-def pinned_card(r, i, theme):
-    cw, h = PIN_W, PIN_H
-    desc = r["description"] or ""
-    d = Doc(cw, h + PIN_GAP, theme, f"{r['name']}. {desc}".strip())
-    d.rect(0.5, 0.5, cw - 1, h - 1, fill=d.c("surface"), stroke=d.c("line-strong"))
-    d.corner(0, 0)
+def pinned_row(r, i, theme):
+    """Linha de repositório fixado: largura total, descrição inteira, meta numa linha só."""
     P = 24
-    top = P
-    label(d, P, top + 5, f"R/{i:02d}")
+    desc = r["description"] or ""
+    lines = wrap(desc, "sans400", 14, W - 2 * P) if desc else []
+    h = 18 + 28 + 6 + max(1, len(lines)) * 22 + 18
+    d = Doc(W, h + PIN_GAP, theme, f"{r['name']}. {desc}".strip())
+    d.rect(0.5, 0.5, W - 1, h - 1, fill=d.c("surface"), stroke=d.c("line-strong"))
+    d.corner(0, 0)
+    top = 18
+    y = baseline(top, 22, 28, "sans300")
+    x = P + d.text(P, baseline(top, 12, 28, "mono400"), f"R/{i:02d}", "mono400", 12, d.c("muted"), 0.14) + 16
+    # meta à direita, montada da direita para a esquerda
+    fork = "FORK" if r["forks"] == 1 else "FORKS"
+    est = "ESTRELA" if r["stars"] == 1 else "ESTRELAS"
+    parts = [f"{r['stars']} {est}", f"{r['forks']} {fork}", f"ATUALIZADO {r['pushed']}"]
     if r["language"]:
-        t = r["language"].upper()
-        tw = FONT["mono400"].width(t, 11, 0.14) + 20 + 15
-        tag(d, cw - P - tw, top, t, "accent")
-    top += 26 + 12
-    size = 28
-    while FONT["sans300"].width(r["name"], size, -0.01) > cw - 2 * P and size > 18:
-        size -= 1
-    d.text(P, baseline(top, size, 35, "sans300"), r["name"], "sans300", size, d.c("text-strong"),
-           extra=' letter-spacing="-0.01em"')
-    top += 35 + 12
-    if desc:
-        lines = wrap(desc, "sans400", 15, cw - 2 * P)
-        if len(lines) > 3:
-            lines = lines[:3]
-            lines[2] = ellipsize(lines[2] + " …", "sans400", 15, cw - 2 * P)
-        for line in lines:
-            d.text(P, baseline(top, 15, 24, "sans400"), line, "sans400", 15, d.c("text"))
-            top += 24
+        parts.insert(0, r["language"].upper())
+    meta = " · ".join(parts)
+    mw = FONT["mono400"].width(meta, 11, 0.12)
+    mx = W - P - mw
+    my = baseline(top, 11, 28, "mono400")
+    if r["language"]:
+        lw = FONT["mono400"].width(parts[0], 11, 0.12)
+        d.add(f'<circle cx="{f2(mx - 11)}" cy="{f2(top + 14)}" r="3.5" fill="{d.c("accent")}"/>')
+        d.text(mx, my, parts[0], "mono400", 11, d.c("text"), 0.12)
+        rest = " · " + " · ".join(parts[1:])
+        d.text(mx + lw + 0.12 * 11, my, rest, "mono400", 11, d.c("muted"), 0.12)
+        mx -= 17
     else:
-        d.text(P, baseline(top, 13, 24, "mono400"), "[SEM DESCRIÇÃO]", "mono400", 13, d.c("muted"), 0.08)
-    meta = [("ESTRELAS", str(r["stars"])), ("FORKS", str(r["forks"])), ("ATUALIZADO", r["pushed"])]
-    mtop = h - P - 16 - 12
-    d.hline(P, cw - P, mtop, d.c("line"))
-    mtop += 12
-    x = P
-    for k, v in meta:
-        x += d.text(x, baseline(mtop, 12, 16, "mono400"), k, "mono400", 12, d.c("muted"), 0.08) + 8
-        x += d.text(x, baseline(mtop, 12, 16, "mono400"), v, "mono400", 12, d.c("text")) + 20
+        d.text(mx, my, meta, "mono400", 11, d.c("muted"), 0.12)
+    size = 22
+    name = r["name"]
+    while FONT["sans300"].width(name, size, -0.01) > mx - x - 24 and size > 15:
+        size -= 1
+    d.text(x, y, name, "sans300", size, d.c("text-strong"), extra=' letter-spacing="-0.01em"')
+    top += 28 + 6
+    if lines:
+        for line in lines:
+            d.text(P, baseline(top, 14, 22, "sans400"), line, "sans400", 14, d.c("text"))
+            top += 22
+    else:
+        d.text(P, baseline(top, 12, 22, "mono400"), "[SEM DESCRIÇÃO]", "mono400", 12, d.c("muted"), 0.08)
     return d
 
 
@@ -597,7 +602,7 @@ def readme(C, pinned):
         out += [pic(f"section-{n}", f"0x{n:02d} · Repositórios fixados"), "", "<br>", ""]
         for i, r in enumerate(pinned, 1):
             alt = f"{r['name']}" + (f" — {r['description']}" if r["description"] else "")
-            out.append(f'<a href="{r["url"]}">' + pic(f"pinned-{i}", alt, 'width="49%"') + "</a>")
+            out.append(f'<a href="{r["url"]}">' + pic(f"pinned-{i}", alt) + "</a>")
         out += ["", "<br><br>", ""]
     n += 1
     out += [pic(f"section-{n}", f"0x{n:02d} · Atividade"), "", "<br>", "",
@@ -633,7 +638,7 @@ def main():
         for i, (t, s) in enumerate(secs, 1):
             write(f"section-{i}-{th}.svg", section(th, f"0x{i:02d}", t, s))
         for i, r in enumerate(pinned, 1):
-            write(f"pinned-{i}-{th}.svg", pinned_card(r, i, th))
+            write(f"pinned-{i}-{th}.svg", pinned_row(r, i, th))
         write(f"activity-{th}.svg", activity(stats, th, today))
         for i, (t, _, v) in enumerate(C["links"], 1):
             write(f"link-{i}-{th}.svg", button(th, t, v))
