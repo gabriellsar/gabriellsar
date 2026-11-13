@@ -4,14 +4,8 @@
   "prompt": "gabriel@arch",
   "hello": "Olá, eu sou o Gabriel.",
   "lead": "Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo soluções de machine learning aplicado e levo modelos do notebook até a produção.",
-  "status_areas": [
-    "DADOS",
-    "IA",
-    "ENGENHARIA"
-  ],
   "location": "RIO DE JANEIRO · UTC−3",
   "revision": "GS/README · REV 1.0",
-  "hero_seed": 315,
   "links": [
     [
       "VER PORTFÓLIO →",

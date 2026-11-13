@@ -158,9 +158,7 @@ BASE_CSS = (
     "text{font-variant-numeric:tabular-nums;font-kerning:normal;}"
     ".blink{animation:blink 1.1s steps(1) infinite;}"
     "@keyframes blink{50%{opacity:0;}}"
-    ".scan{animation:scan 7s linear infinite;}"
-    "@keyframes scan{from{transform:translateX(0);}to{transform:translateX(var(--d));}}"
-    "@media (prefers-reduced-motion:reduce){.blink,.scan{animation:none;}}"
+    "@media (prefers-reduced-motion:reduce){.blink{animation:none;}}"
 )
 
 _subset_cache = {}
@@ -229,17 +227,6 @@ def tag(d, x, top, s, tone="neutral", dot=True):
     return w
 
 
-def rng(seed):
-    s = (seed & 0xFFFFFFFF) or 1
-
-    def nxt():
-        nonlocal s
-        s = (s * 1664525 + 1013904223) & 0xFFFFFFFF
-        return s / 4294967296
-
-    return nxt
-
-
 def terrain_dots(d, x0, y0, heights, rows, px, py, animate=True, empty=False):
     """Mesma regra do componente Heightmap: acima do relevo = dot, crista = accent, profundidade = opacidade."""
     k = min(px, py) / 10
@@ -260,26 +247,19 @@ def terrain_dots(d, x0, y0, heights, rows, px, py, animate=True, empty=False):
     d.add("<g>" + "".join(out) + "</g>")
 
 
-def seeded_heights(cols, rows, seed):
-    r = rng(seed)
-    p1, p2, p3 = r() * 6.283, r() * 6.283, r() * 6.283
-    return [rows * 0.38 + rows * 0.18 * math.sin(c * 0.19 + p1) + rows * 0.1 * math.sin(c * 0.43 + p2)
-            + rows * 0.06 * math.sin(c * 1.07 + p3) for c in range(cols)]
-
-
 def peak_ring(d, cx, cy, r=8):
     d.add(f'<circle cx="{f2(cx)}" cy="{f2(cy)}" r="{r}" fill="none" stroke="{d.c("signal")}" stroke-width="2"/>')
 
 
 # ---------------------------------------------------------------- blocos
 def hero(C, theme):
-    """Sessão de terminal: ./hello digita, a saudação aparece, status, prompt com cursor.
+    """Sessão de terminal: ./hello digita, a saudação aparece, prompt com cursor.
 
     As animações começam e terminam no estado visível, então um render estático mostra tudo.
     """
     P = 32
-    d = Doc(W, 10, theme, f"{C['prompt']} ./hello — {C['hello']} {C['lead']} {C['status'].capitalize()}.", bg="bg")
-    T = 4.0  # duração total da sequência, em segundos
+    d = Doc(W, 10, theme, f"{C['prompt']}:~$ ./hello — {C['hello']} {C['lead']}", bg="bg")
+    T = 3.0  # duração total da sequência, em segundos
     css = []
 
     def reveal(name, at):
@@ -320,59 +300,23 @@ def hero(C, theme):
     size = 72
     while FONT["sans200"].width(C["hello"], size, -0.035) > W - 2 * P and size > 40:
         size -= 2
-    cls = reveal("out1", 1.2)
-    d.add(f"<g{cls}>")
+    d.add(f"<g{reveal('out1', 1.2)}>")
     d.text(P, baseline(top, size, size * 1.02, "sans200"), C["hello"], "sans200", size, d.c("text-strong"),
            extra=' letter-spacing="-0.035em"')
     top += size * 1.02 + 12
-    for line in wrap(C["lead"], "sans300", 19, 640):
+    for line in wrap(C["lead"], "sans300", 19, 680):
         d.text(P, baseline(top, 19, 30, "sans300"), line, "sans300", 19, d.c("text"))
         top += 30
     d.add("</g>")
-    top += 24
+    top += 28
 
-    d.add(f"<g{reveal('out2', 1.6)}>")
-    prompt(top, "cat status", "type2", 1.7)
-    d.add("</g>")
-    top += 24 + 12
-    d.add(f"<g{reveal('out3', 2.7)}>")
-    x = P
-    x += tag(d, x, top, C["status"], "accent") + 8
-    for a_ in C["status_areas"]:
-        x += tag(d, x, top, a_, "neutral", dot=False) + 8
-    d.add("</g>")
-    top += 26 + 20
-
-    d.add(f"<g{reveal('out4', 3.0)}>")
+    d.add(f"<g{reveal('out2', 1.7)}>")
     end = prompt(top, "")
     d.rect(end, top + 4, 9, 16, fill=d.c("accent"), extra=' class="blink"')
     d.add("</g>")
-    top += 24 + 36
+    top += 24 + 40
 
-    # figura
-    d.hline(P, W - P, top, d.c("line"))
-    cols, rws, pitch = 77, 8, 10
-    seed = C["hero_seed"]
-    cap_top = top + 16
-    label(d, P, cap_top, f"FIG.00 — HEIGHTMAP · {cols}×{rws}", size=11)
-    label(d, W - P, cap_top, f"SEED 0x{seed:X}", size=11, anchor="end")
-    gx = P + ((W - 2 * P) - cols * pitch) / 2
-    gy = cap_top + 16 + 12
-    hs = seeded_heights(cols, rws, seed)
-    terrain_dots(d, gx, gy, hs, rws, pitch, pitch)
-    span = cols * pitch + 24
-    d.add(f'<svg x="{f2(gx)}" y="{f2(gy - 4)}" width="{cols * pitch}" height="{rws * pitch + 8}" overflow="hidden">'
-          f'<rect x="-14" y="0" width="2" height="{rws * pitch + 8}" fill="{d.c("accent")}" fill-opacity=".55" '
-          f'class="scan" style="--d:{span}px"/></svg>')
-    pk = max(range(cols), key=lambda i: hs[i])
-    ph = math.floor(hs[pk])
-    peak_ring(d, gx + pk * pitch + 5, gy + (rws - 1 - ph) * pitch + 5)
-    ptop = gy + rws * pitch + 12
-    label(d, P, ptop, f"PICO x:{pk:03d} y:{ph:02d}", color=d.c("signal"), size=11, ls=0.12)
-    label(d, W - P, ptop, "RELEVO GERADO POR CÓDIGO", size=11, anchor="end")
-    bottom = ptop + 16 + 16
-    d.hline(P, W - P, bottom, d.c("line"))
-    d.h = bottom + 32
+    d.h = top
     d.els.insert(0, f'<rect x="0.5" y="0.5" width="{W - 1}" height="{f2(d.h - 1)}" fill="none" stroke="{d.c("line-strong")}" stroke-width="1"/>')
     d.els.insert(1, f'<rect x="0" y="0" width="12" height="2" fill="{d.c("accent")}"/>')
     d.els.insert(2, f'<rect x="0" y="0" width="2" height="12" fill="{d.c("accent")}"/>')
@@ -389,6 +333,58 @@ def section(theme, addr, title, aside=""):
     if aside:
         d.text(W, base - 4, aside, "mono400", 12, d.c("muted"), 0.14, anchor="end")
     d.hline(0, W, H - 1, d.c("line"))
+    return d
+
+
+def ellipsize(s, font, size, maxw, ls=0.0):
+    if FONT[font].width(s, size, ls) <= maxw:
+        return s
+    while s and FONT[font].width(s + "…", size, ls) > maxw:
+        s = s[:-1]
+    return s.rstrip() + "…"
+
+
+PIN_W, PIN_H, PIN_GAP = 410, 240, 16
+
+
+def pinned_card(r, i, theme):
+    cw, h = PIN_W, PIN_H
+    desc = r["description"] or ""
+    d = Doc(cw, h + PIN_GAP, theme, f"{r['name']}. {desc}".strip())
+    d.rect(0.5, 0.5, cw - 1, h - 1, fill=d.c("surface"), stroke=d.c("line-strong"))
+    d.corner(0, 0)
+    P = 24
+    top = P
+    label(d, P, top + 5, f"R/{i:02d}")
+    if r["language"]:
+        t = r["language"].upper()
+        tw = FONT["mono400"].width(t, 11, 0.14) + 20 + 15
+        tag(d, cw - P - tw, top, t, "accent")
+    top += 26 + 12
+    size = 28
+    while FONT["sans300"].width(r["name"], size, -0.01) > cw - 2 * P and size > 18:
+        size -= 1
+    d.text(P, baseline(top, size, 35, "sans300"), r["name"], "sans300", size, d.c("text-strong"),
+           extra=' letter-spacing="-0.01em"')
+    top += 35 + 12
+    if desc:
+        lines = wrap(desc, "sans400", 15, cw - 2 * P)
+        if len(lines) > 3:
+            lines = lines[:3]
+            lines[2] = ellipsize(lines[2] + " …", "sans400", 15, cw - 2 * P)
+        for line in lines:
+            d.text(P, baseline(top, 15, 24, "sans400"), line, "sans400", 15, d.c("text"))
+            top += 24
+    else:
+        d.text(P, baseline(top, 13, 24, "mono400"), "[SEM DESCRIÇÃO]", "mono400", 13, d.c("muted"), 0.08)
+    meta = [("ESTRELAS", str(r["stars"])), ("FORKS", str(r["forks"])), ("ATUALIZADO", r["pushed"])]
+    mtop = h - P - 16 - 12
+    d.hline(P, cw - P, mtop, d.c("line"))
+    mtop += 12
+    x = P
+    for k, v in meta:
+        x += d.text(x, baseline(mtop, 12, 16, "mono400"), k, "mono400", 12, d.c("muted"), 0.08) + 8
+        x += d.text(x, baseline(mtop, 12, 16, "mono400"), v, "mono400", 12, d.c("text")) + 20
     return d
 
 
@@ -418,6 +414,8 @@ def footer(C, theme):
 
 # ---------------------------------------------------------------- atividade
 GQL = """query($login:String!){user(login:$login){
+ pinnedItems(first:6,types:REPOSITORY){nodes{... on Repository{name owner{login} description url
+  stargazerCount forkCount pushedAt primaryLanguage{name}}}}
  contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{date contributionCount}}}}
  repositories(first:100,ownerAffiliations:OWNER,isFork:false,privacy:PUBLIC){totalCount nodes{stargazerCount
   languages(first:10,orderBy:{field:SIZE,direction:DESC}){edges{size node{name}}}}}}}"""
@@ -446,8 +444,12 @@ def fetch_stats(login, ignore):
         for e in n["languages"]["edges"]:
             if e["node"]["name"] not in ignore:
                 langs[e["node"]["name"]] += e["size"]
+    pinned = [{"name": n["name"] if n["owner"]["login"] == login else f"{n['owner']['login']}/{n['name']}",
+               "description": n["description"], "url": n["url"], "stars": n["stargazerCount"],
+               "forks": n["forkCount"], "pushed": n["pushedAt"][:10],
+               "language": (n["primaryLanguage"] or {}).get("name")} for n in u["pinnedItems"]["nodes"]]
     return {"days": days, "total": cal["totalContributions"], "repos": u["repositories"]["totalCount"],
-            "stars": stars, "langs": dict(langs)}
+            "stars": stars, "langs": dict(langs), "pinned": pinned}
 
 
 def demo_stats():
@@ -462,7 +464,12 @@ def demo_stats():
         days.append((d0.isoformat(), max(0, int(r.gauss(base, 2.5))) if r.random() > 0.3 else 0))
         d0 += dt.timedelta(days=1)
     return {"days": days, "total": sum(c for _, c in days), "repos": 14, "stars": 23,
-            "langs": {"Python": 410000, "R": 160000, "C++": 120000, "GLSL": 50000, "TypeScript": 80000, "GDScript": 30000}}
+            "langs": {"Python": 410000, "R": 160000, "C++": 120000, "GLSL": 50000, "TypeScript": 80000, "GDScript": 30000},
+            "pinned": [{"name": n, "description": dsc, "url": "https://github.com/gabriellsar", "stars": st,
+                        "forks": 0, "pushed": "2026-11-10", "language": lg} for n, dsc, st, lg in [
+                ("demo-repo-um", "Descrição de exemplo para pré-visualizar o card.", 3, "Python"),
+                ("demo-repo-dois", None, 0, None),
+                ("um-nome-de-repositorio-bem-comprido", "Texto longo de exemplo que precisa quebrar em várias linhas para testar o limite de três linhas e as reticências no final do card.", 12, "TypeScript")]]}
 
 
 MONTHS = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"]
@@ -598,6 +605,37 @@ def activity(stats, theme, today):
     return d
 
 
+# ---------------------------------------------------------------- README
+def pic(name, alt, attr='width="100%"'):
+    return (f'<picture><source media="(prefers-color-scheme: light)" srcset="assets/{name}-light.svg">'
+            f'<img src="assets/{name}-dark.svg" {attr} alt="{esc(alt)}"></picture>')
+
+
+def readme(C, pinned):
+    out = ["<!-- Gerado por scripts/build.py a partir de content.json. Não edite à mão: a Action reescreve. -->", ""]
+    out.append(f'<a href="{C["links"][0][1]}">' + pic("hero", f"{C['prompt']}:~$ ./hello — {C['hello']} {C['lead']}") + "</a>")
+    out += ["", "<br><br>", ""]
+    n = 0
+    if pinned:
+        n += 1
+        out += [pic(f"section-{n}", f"0x{n:02d} · Repositórios fixados"), "", "<br>", ""]
+        for i, r in enumerate(pinned, 1):
+            alt = f"{r['name']}" + (f" — {r['description']}" if r["description"] else "")
+            out.append(f'<a href="{r["url"]}">' + pic(f"pinned-{i}", alt, 'width="49%"') + "</a>")
+        out += ["", "<br><br>", ""]
+    n += 1
+    out += [pic(f"section-{n}", f"0x{n:02d} · Atividade"), "", "<br>", "",
+            pic("activity", "Atividade no GitHub nos últimos 12 meses: contribuições, repositórios, estrelas, "
+                            "sequência, relevo de contribuições por semana e linguagens. Atualizado todo dia."),
+            "", "<br><br><br>", ""]
+    n += 1
+    out += [pic(f"section-{n}", f"0x{n:02d} · Contato"), "", "<br>", ""]
+    for i, (t, href, _) in enumerate(C["links"], 1):
+        out.append(f'<a href="{href}">' + pic(f"link-{i}", t.replace("→", "").strip().capitalize(), 'height="44"') + "</a>")
+    out += ["", "<br><br><br>", "", pic("footer", f"{C['brand']} · {C['revision']}"), ""]
+    return "\n".join(out)
+
+
 # ---------------------------------------------------------------- main
 def write(name, doc):
     ASSETS.mkdir(exist_ok=True)
@@ -607,22 +645,25 @@ def write(name, doc):
 def main():
     C = json.loads((ROOT / "content.json").read_text(encoding="utf-8"))
     demo = "--demo" in sys.argv
-    only_activity = "--activity" in sys.argv
     today = dt.date.today().isoformat()
     stats = demo_stats() if demo else fetch_stats(C["login"], set(C.get("ignore_languages", [])))
+    pinned = (stats or {}).get("pinned") or []
+    secs = ([("Repositórios fixados", f"{len(pinned):02d} REPOS")] if pinned else []) + [
+        ("Atividade", "GITHUB · 12 MESES"), ("Contato", C["location"])]
+    for old in ASSETS.glob("*.svg"):
+        old.unlink()
     for th in THEMES:
-        write(f"activity-{th}.svg", activity(stats, th, today))
-        if only_activity:
-            continue
         write(f"hero-{th}.svg", hero(C, th))
-        secs = [("0x01", "Atividade", "GITHUB · 12 MESES"),
-                ("0x02", "Contato", "RIO DE JANEIRO · UTC−3")]
-        for i, (a, t, s) in enumerate(secs, 1):
-            write(f"section-{i}-{th}.svg", section(th, a, t, s))
+        for i, (t, s) in enumerate(secs, 1):
+            write(f"section-{i}-{th}.svg", section(th, f"0x{i:02d}", t, s))
+        for i, r in enumerate(pinned, 1):
+            write(f"pinned-{i}-{th}.svg", pinned_card(r, i, th))
+        write(f"activity-{th}.svg", activity(stats, th, today))
         for i, (t, _, v) in enumerate(C["links"], 1):
             write(f"link-{i}-{th}.svg", button(th, t, v))
         write(f"footer-{th}.svg", footer(C, th))
-    print("ok" + (" (demo)" if demo else "" if stats else " (sem token: atividade em modo vazio)"))
+    (ROOT / "README.md").write_text(readme(C, pinned), encoding="utf-8")
+    print("ok" + (" (demo)" if demo else "" if stats else " (sem token: fixados e atividade ficam vazios)"))
 
 
 if __name__ == "__main__":
