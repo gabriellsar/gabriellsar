@@ -1,6 +1,6 @@
 <!-- Gerado com o sistema visual gabriel.s. Edite content.json e rode: python scripts/build.py -->
 
-<a href="https://gabriellsar.dev"><picture><source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg"><img src="assets/hero-dark.svg" width="100%" alt="gabriel.r@rio:~$ ./hello — Olá, eu sou o Gabriel. Engenharia de Computação na PUC-Rio. Pesquisa em ML aplicado, gráficos procedurais e software que vira produto. Aberto a estágios em dados, IA e engenharia."></picture></a>
+<a href="https://gabriellsar.dev"><picture><source media="(prefers-color-scheme: light)" srcset="assets/hero-light.svg"><img src="assets/hero-dark.svg" width="100%" alt="gabriel.r@rio:~$ ./hello — Olá, eu sou o Gabriel. Estudante de Engenharia de Computação na PUC-Rio. Pesquiso e construo soluções de machine learning aplicado e levo modelos do notebook até a produção."></picture></a>
 
 <br><br>
 
